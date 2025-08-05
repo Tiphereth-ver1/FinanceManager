@@ -10,7 +10,7 @@ This program is a rudimentary finance manager which has a few basic features so 
 
 ## Main features:
 
-A transaction table. Data is stored using a csv. Contains data values for date (date of transaction), type (currently contains only DEPOSIT and EXPENDITURE as selections), value (the value of the transaction), and description. Due to the structure of the application using .cv files, commas will break the description. However, everything else should function normally. The checkboxes along the left side of the table can be used to delete transactions with the transaction button.
+A transaction table. Data is stored using a csv file. Contains data values for date (date of transaction), type (currently contains only DEPOSIT and EXPENDITURE as selections), value (the value of the transaction), and description. Due to the structure of the application using .cv files, commas will break the description. However, everything else should function normally. The checkboxes along the left side of the table can be used to delete transactions with the transaction button.
 <img width="876" height="149" alt="image" src="https://github.com/user-attachments/assets/ab7e99fb-71a8-4799-93ea-78c7079a2a1d" />
 
 The Add button and delete button. The add button will bring up the following menu, which can be used to add transactions to the transaction table. The same information contained in the transaction table needs to be filled out for this particular prompt. The Delete button will delete any items selected using the checkbox in the transaction table.
@@ -21,5 +21,10 @@ The Add button and delete button. The add button will bring up the following men
 
 Transactions can also be sorted based on the date or value of the entry. Future implementations will contain filtering options as well. The update button will apply any sorting parameters set here.
 
+This fun image of Bocchi has the net balance of the account located beneath it. It changes in response to the value of the net balance. If over 1000, the colour of the text will be green. Otherwise, it will be displayed as red.
+
 <img width="374" height="118" alt="image" src="https://github.com/user-attachments/assets/680b3881-f6de-4495-8760-df8d1fcf8dcc" />
+
+
+
 
