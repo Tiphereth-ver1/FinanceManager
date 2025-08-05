@@ -2,18 +2,18 @@ package financemanager.runnables;
 
 import javax.swing.table.DefaultTableModel;
 
-import financemanager.GUI;
 import financemanager.TransactionManager;
+import financemanager.cardpanels.HomePanel;
 
 public class DeleteButtonRunnable implements Runnable{
     private final DefaultTableModel model;
     private final TransactionManager transactions;
-    private final GUI guiRef;
+    private HomePanel homePanel;
 
-    public DeleteButtonRunnable(DefaultTableModel model, TransactionManager transactions, GUI guiRef) {
+    public DeleteButtonRunnable(DefaultTableModel model, TransactionManager transactions, HomePanel homePanel) {
         this.model = model;
         this.transactions = transactions;
-        this.guiRef = guiRef;
+        this.homePanel = homePanel;
     }
 
     @Override
@@ -25,8 +25,8 @@ public class DeleteButtonRunnable implements Runnable{
                     model.removeRow(i);
                 }
             }
-            guiRef.refreshTransactionTable(); // optional depending on how you sync
-            guiRef.refreshNetBalance();    };
+            homePanel.refreshTransactionTable(); // optional depending on how you sync
+            homePanel.refreshNetBalance();    };
     }
     
 

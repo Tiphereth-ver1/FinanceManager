@@ -1,17 +1,17 @@
 package financemanager.runnables;
 
-import financemanager.GUI;
+import financemanager.cardpanels.HomePanel;
 
 public class AddButtonRunnable implements Runnable{
 
-    private final GUI guiRef;
+    private final HomePanel homePanel;
 
-    public AddButtonRunnable(GUI guiRef) {
-        this.guiRef = guiRef;
+    public AddButtonRunnable(HomePanel homePanel) {
+        this.homePanel = homePanel;
     }
 
     @Override
     public void run() {
-            guiRef.showAddTransactionDialog();
+            homePanel.showAddTransactionDialog();
     }
 }

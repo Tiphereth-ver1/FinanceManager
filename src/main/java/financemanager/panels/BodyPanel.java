@@ -12,7 +12,7 @@ public class BodyPanel extends JPanel {
         setBorder(BorderFactory.createEmptyBorder( 30, 30, 30,30));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        ImageIcon image = new ImageIcon(getClass().getResource("/bocchi.png"));
+        ImageIcon image = new ImageIcon(getClass().getResource("/images/bocchi.png"));
         JLabel bocchi = new JLabel(image, SwingConstants.CENTER);
         bocchi.setAlignmentX(Component.CENTER_ALIGNMENT);
         

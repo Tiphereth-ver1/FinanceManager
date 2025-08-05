@@ -2,8 +2,9 @@ package financemanager.panels;
 
 import java.awt.FlowLayout;
 import java.util.function.Supplier;
+import financemanager.functions.ImageResizer;
 
-
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -17,11 +18,12 @@ public class ToolPanel extends JPanel{
     
 
     public ToolPanel(JFrame parentFrame, Runnable addButtonRunnable, Runnable deleteButtonRunnable,
-    Runnable updateButtonRunnable, Runnable saveButtonRunnable, Runnable loadButtonRunnable) {
+    Runnable updateButtonRunnable) {
         this.updateButtonRunnable = updateButtonRunnable;
         String[] options = {"Date (Ascending)", "Date (Descending)", "Value (Ascending)", "Value (Descending)"};
-        setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));      
-        JButton addButton = new JButton("Add");
+        setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));  
+        ImageIcon addIcon = new ImageIcon(getClass().getResource("/images/add_icon.png"));    
+        JButton addButton = new JButton("Add", ImageResizer.resizeImageIcon(addIcon, 20, 20));
         JButton deleteButton = new JButton("Delete");
         JLabel opts = new JLabel("Sorting options:");
         this.popupBox = new JComboBox<>(options);

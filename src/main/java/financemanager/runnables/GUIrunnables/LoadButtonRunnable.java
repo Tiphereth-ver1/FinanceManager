@@ -1,4 +1,4 @@
-package financemanager.runnables;
+package financemanager.runnables.GUIrunnables;
 
 import java.io.File;
 
@@ -7,20 +7,20 @@ import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import financemanager.ConfigLoader;
-import financemanager.GUI;
 import financemanager.TransactionManager;
+import financemanager.cardpanels.HomePanel;
 
 public class LoadButtonRunnable implements Runnable {
     private final FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files", "csv");
     private JFrame parentFrame;
     private TransactionManager transactions;
-    private GUI guiRef;
+    private HomePanel homePanel;
     private ConfigLoader configLoader;
 
-    public LoadButtonRunnable(JFrame parentFrame, TransactionManager transactions, GUI guiRef, ConfigLoader configLoader) {
+    public LoadButtonRunnable(JFrame parentFrame, TransactionManager transactions, HomePanel homePanel, ConfigLoader configLoader) {
         this.parentFrame = parentFrame;
         this.transactions = transactions;
-        this.guiRef = guiRef;
+        this.homePanel = homePanel;
         this.configLoader = configLoader;
     }
 
@@ -34,8 +34,8 @@ public class LoadButtonRunnable implements Runnable {
             configLoader.set("default.csv",file.getPath());
             configLoader.save(); 
             transactions.readFromCSVFile(file.getAbsolutePath());
-            guiRef.refreshTransactionTable();
-            guiRef.refreshNetBalance();
+            homePanel.refreshTransactionTable();
+            homePanel.refreshNetBalance();
             }
     }
 

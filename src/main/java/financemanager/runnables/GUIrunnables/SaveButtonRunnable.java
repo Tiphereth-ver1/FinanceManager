@@ -1,4 +1,4 @@
-package financemanager.runnables;
+package financemanager.runnables.GUIrunnables;
 
 import java.io.File;
 

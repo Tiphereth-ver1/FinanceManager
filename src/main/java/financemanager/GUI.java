@@ -1,52 +1,19 @@
 package financemanager;
 import com.formdev.flatlaf.FlatDarkLaf;
 
-import financemanager.dialogs.AddButtonDialog;
-import financemanager.panels.*;
-import financemanager.runnables.*;
+import financemanager.cardpanels.*;
 import financemanager.menus.*;
+import financemanager.runnables.GUIrunnables.*;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class GUI {
     private TransactionManager transactions;
     private ConfigLoader configLoader;
-    private DefaultTableModel model;
-    private JFrame frame;
-
-    private HeaderPanel headerPanel;
-    private BodyPanel bodyPanel;
-    private ToolPanel toolPanel;
-    private TransactionTablePanel transactionTablePanel;
     private JMenuBar menuBar;
-
-    public void refreshNetBalance() {
-        bodyPanel.refreshNetBalance(transactions.netBalance());
-    }
-
-    public void showAddTransactionDialog() {
-    AddButtonDialog dialog = new AddButtonDialog(
-        frame,
-        transactions,
-        () -> {
-            refreshTransactionTable();
-            refreshNetBalance();
-        }
-    );
-    dialog.setVisible(true);
-}
-
-    public void refreshTransactionTable() {
-    model.setRowCount(0); // Clear current rows
-
-    Object[][] data = transactions.getMatrix(); // Pull current data
-    for (Object[] row : data) {
-        model.addRow(row); // Add each row to the table
-    }
-}
-
+    private HomePanel homePanel;
+    private GraphPanel graphPanel;
 
     public GUI(TransactionManager transactions, ConfigLoader configLoader) {
         this.transactions = transactions;
@@ -56,43 +23,26 @@ public class GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(900, 650);
         frame.setTitle("Finance Manager");
-        frame.setIconImage(new ImageIcon(getClass().getResource("/icon.jpg")).getImage());
+        frame.setIconImage(new ImageIcon(getClass().getResource("/images/icon.jpg")).getImage());
 
+        this.homePanel = new HomePanel(frame, transactions, configLoader);
+        this.graphPanel = new GraphPanel();
+
+        JPanel mainPanel = new JPanel(new CardLayout());
+        mainPanel.add(homePanel, "Home");
+        mainPanel.add(graphPanel, "Graph");
         
-        this.bodyPanel = new BodyPanel(transactions.netBalance());
 
-        JPanel mainPanel = new JPanel();
-        // mainPanel.setBackground(new Color(255, 191, 243)); // Light gray
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        this.transactionTablePanel = new TransactionTablePanel(this.transactions);
-        this.model = transactionTablePanel.getModel();
-
-        this.headerPanel = new HeaderPanel();
-        this.bodyPanel = new BodyPanel(this.transactions.netBalance());
-        this.toolPanel = new ToolPanel(frame, 
-        new AddButtonRunnable(this),
-        new DeleteButtonRunnable(model, this.transactions, this),
-        null,
-        new SaveButtonRunnable(frame, this.transactions),
-        new LoadButtonRunnable(frame, this.transactions, this, this.configLoader)
-        );
-
-        UpdateButtonRunnable updater = new UpdateButtonRunnable(toolPanel.getSortOptionSupplier(), this, this.transactions);
-        toolPanel.setUpdateButtonRunnable(updater);
-
-        this.menuBar = new MainMenuBar(frame, new SaveButtonRunnable(frame, this.transactions),
-        new LoadButtonRunnable(frame, this.transactions, this, this.configLoader));
-
-        mainPanel.add(headerPanel);
-        mainPanel.add(bodyPanel);
-        mainPanel.add(toolPanel);
-        mainPanel.add(transactionTablePanel);
         frame.add(mainPanel);
-        frame.setJMenuBar(this.menuBar);
+        this.menuBar = new MainMenuBar(frame, new SaveButtonRunnable(frame, this.transactions),
+        new LoadButtonRunnable(frame, this.transactions, homePanel, this.configLoader));
 
+        frame.setJMenuBar(this.menuBar);
         frame.setVisible(true);
+
+        CardLayout cl = (CardLayout) mainPanel.getLayout();
+        cl.show(mainPanel, "Home");
+
 
     }
     public static void main(String[] args) {
@@ -111,9 +61,9 @@ public class GUI {
             UIManager.put("Table.foreground", Color.WHITE);
             UIManager.put("Table.selectionBackground", new Color(70, 70, 120));
             UIManager.put("Table.gridColor", Color.WHITE);
-            // UIManager.put("TableHeader.background", new Color(50, 50, 50));
-            // UIManager.put("TableHeader.foreground", Color.WHITE);
-            // UIManager.put("TableHeader.font", new Font("Arial", Font.BOLD, 14));
+            UIManager.put("TableHeader.background", new Color(50, 50, 50));
+            UIManager.put("TableHeader.foreground", Color.WHITE);
+            UIManager.put("TableHeader.font", new Font("Arial", Font.BOLD, 14));
             UIManager.put("ScrollBar.thumb", new Color(255, 166, 252));
 
         } catch (Exception e) {
